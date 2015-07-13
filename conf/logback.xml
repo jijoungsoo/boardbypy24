@@ -15,6 +15,16 @@
   <logger name="play" level="INFO" />
   <logger name="application" level="DEBUG" />
 
+  <!-- logger name="slick.jdbc.JdbcBackend.statement" level="DEBUG" / -->
+    
+<!-- log4jdbc -->  
+	<logger name="jdbc.sqlonly" level="DEBUG"  additivity="false">
+			<appender-ref ref="STDOUT" />		
+	</logger>	
+
+
+
+
   <root level="ERROR">
     <appender-ref ref="STDOUT" />
   </root>

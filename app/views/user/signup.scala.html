@@ -1,0 +1,9 @@
+@(userForm: Form[UserData])(implicit messages: Messages)
+@helper.form(action = routes.UserApp.signup) {
+		@helper.inputText(userForm("loginId"), 'placeholder -> "사용자 ID" ,'autocomplete->"off")
+		@helper.inputText(userForm("name"), 'placeholder -> "이름" ,'autocomplete->"off")
+		@helper.inputText(userForm("email"), 'placeholder -> "Email",'autocomplete->"off")
+		@helper.inputText(userForm("password"), 'placeholder -> "패스워드",'autocomplete->"off")
+		@helper.inputText(userForm("retypedPassword"), 'placeholder -> "패스워드확인",'autocomplete->"off")
+	<input type="submit" value="가입" />
+}

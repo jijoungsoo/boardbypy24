@@ -1,0 +1,5 @@
+@(boardForm: Form[InsertBoardData])(implicit messages: Messages)
+@helper.form(action = routes.BoardApp.newPost) {
+		@helper.inputText(boardForm("content"), 'placeholder -> "내용" ,'autocomplete->"off")
+	<input type="submit" value="글등록" />
+}

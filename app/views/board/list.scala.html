@@ -1,0 +1,59 @@
+@(boards: Seq[Board])(implicit request:  play.api.mvc.Request[play.api.mvc.AnyContent])
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+
+<div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">게시판</div>
+
+<!-- Table -->
+<table class="table">
+<thead>
+<tr>
+	<th></th>
+	<th>id</th>
+	<th>content</th>
+	<th>writerIp</th>
+	<th>writerId</th>
+	<th>writerDate</th>
+
+</tr>
+</thead>
+<tbody>
+@for(board <- boards) {
+<tr>
+	<td>
+@helper.form(action = routes.BoardApp.editPostForm(board.id)) {
+	<button type="submit" class="btn btn-default" aria-label="Left Align">
+	  수정
+	</button>
+	}
+	@helper.form(action = routes.BoardApp.deletePost(board.id)) {
+		<button type="submit" class="btn btn-default" aria-label="Left Align">
+	  삭제
+	</button>
+	}
+	</td>
+	<td>@board.id</td>
+	<td>@board.content</td>
+	<td>@board.writerIp</td>
+	<td>@board.writerId</td>
+	<td>@board.writerDate</td>
+</tr>
+} 
+</tbody>
+</table>
+</div>
+@if(controllers.UserApp.isLoggedInSession(request)=="false"){
+	@helper.form(action = routes.BoardApp.newPostForm) {
+		<button type="submit" class="btn btn-default" aria-label="Left Align">
+		  등록
+		</button>
+		}
+	} else {
+		<a href="@routes.UserApp.loginForm">로그인화면</a>
+	}

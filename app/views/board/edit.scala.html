@@ -1,0 +1,8 @@
+@(boardForm: Form[Board])(implicit messages: Messages)
+@helper.form(action = routes.BoardApp.editPost(boardForm("id").value.getOrElse("0").toLong)) {
+		@helper.inputText(boardForm("content"), 'placeholder -> "내용" ,'autocomplete->"off")
+		@helper.inputText(boardForm("writerIp"), 'placeholder -> "내용" ,'autocomplete->"off")
+		@helper.inputText(boardForm("writerId"), 'placeholder -> "내용" ,'autocomplete->"off")
+		@helper.inputText(boardForm("writerDate"), 'placeholder -> "내용" ,'autocomplete->"off")
+	<input type="submit" value="글수정" />
+}

@@ -1,0 +1,7 @@
+@(loginForm: Form[LoginData])(implicit messages: Messages, session: play.api.mvc.Session)
+@session.get("loginId")
+@helper.form(action = routes.UserApp.login) {
+		@helper.inputText(loginForm("loginId"), 'placeholder -> "사용자 ID" ,'autocomplete->"off")
+		@helper.inputText(loginForm("password"), 'placeholder -> "패스워드",'autocomplete->"off")
+	<input type="submit" value="로그인" />
+}

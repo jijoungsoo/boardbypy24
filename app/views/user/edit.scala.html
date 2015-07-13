@@ -1,0 +1,18 @@
+@(userForm: Form[User])(implicit messages: Messages)
+<form id="frmBasic" method="post" action="@routes.UserApp.editUserInfo" class="pull-left">
+	<input type="text" name="@userForm("id").name" id="@userForm("id").id" value="@userForm("id").value" />
+		@helper.inputText(userForm("loginId"), 'placeholder -> "사용자 ID" ,'autocomplete->"off")
+		@helper.inputText(userForm("name"), 'placeholder -> "이름" ,'autocomplete->"off")
+		@helper.inputText(userForm("email"), 'placeholder -> "Email",'autocomplete->"off")
+		@helper.inputText(userForm("password"), 'placeholder -> "패스워드",'autocomplete->"off")
+		@helper.inputText(userForm("passwordSalt"), 'placeholder -> "패스워드확인",'autocomplete->"off")
+		@helper.inputText(userForm("avatarUrl"), 'placeholder -> "패스워드확인",'autocomplete->"off")
+		@helper.inputRadioGroup(   
+				userForm("remeberMe"),
+				options = Seq("T"->"Male","F"->"Female")
+				,'_label -> "저장"
+				,'_error -> userForm("remeberMe").error.map(_.withMessage("select gender"))
+				)
+		@helper.inputText(userForm("date"), 'placeholder -> "패스워드확인",'autocomplete->"off")
+	<input type="submit" value="수정" />
+</form>
