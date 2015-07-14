@@ -89,7 +89,7 @@ object UserApp {
 
     val date = new java.util.Date();
     val sqlDate = new java.sql.Date(date.getTime());
-    return User(-1l, "존재하지 않는 사용자입니다.", "", "", "", "", Some(""), "F", sqlDate);
+    return User(-1l, "존재하지 않는 사용자입니다.", "", "", Some(""), "", Some(""), Some("F"), sqlDate);
   }
 
   def currentUser(implicit request: Request[AnyContent]): User = {
@@ -208,10 +208,10 @@ val answe = Json.toJson[models.User](result1(0))
       "name" -> play.api.data.Forms.nonEmptyText,
       "loginId" -> play.api.data.Forms.nonEmptyText,
       "password" -> play.api.data.Forms.nonEmptyText,
-      "passwordSalt" -> play.api.data.Forms.nonEmptyText,
+      "passwordSalt" -> optional(play.api.data.Forms.nonEmptyText),
       "email" -> play.api.data.Forms.nonEmptyText,
       "avatarUrl" -> optional(play.api.data.Forms.text),
-      "remeberMe" -> play.api.data.Forms.text,
+      "remeberMe" -> optional(play.api.data.Forms.text),
       "date" -> play.api.data.Forms.date)(User.apply)(User.unapply))
 
   def editUserInfoForm = Action {

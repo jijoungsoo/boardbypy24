@@ -98,10 +98,10 @@ class UserDAO @Inject() (@NamedDatabase("default") protected val dbConfigProvide
     def name = column[String]("NAME")
     def loginId = column[String]("LOGIN_ID")
     def password = column[String]("PASSWORD")
-    def passwordSalt = column[String]("PASSWORD_SALT")
+    def passwordSalt = column[Option[String]]("PASSWORD_SALT")
     def email = column[String]("EMAIL")
     def avatarUrl = column[Option[String]]("AVATAR_URL")
-    def remeberMe = column[String]("REMEMBER_ME")
+    def remeberMe = column[Option[String]]("REMEMBER_ME")
     def date = column[Date]("DATE")
     def * = (id, name, loginId, password, passwordSalt, email, avatarUrl, remeberMe, date) <> ((User.apply _).tupled, User.unapply _)
   }

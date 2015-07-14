@@ -8,10 +8,10 @@ case class User(
     ,name: String
     ,loginId: String
     ,password: String
-    ,passwordSalt: String
+    ,passwordSalt: Option[String]
     ,email: String
     ,avatarUrl: Option[String]
-    ,remeberMe: String
+    ,remeberMe: Option[String]
     ,date: Date
 )
 object User{
