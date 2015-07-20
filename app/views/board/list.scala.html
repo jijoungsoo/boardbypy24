@@ -48,7 +48,8 @@
 </tbody>
 </table>
 </div>
-@if(controllers.UserApp.isLoggedInSession(request)=="false"){
+@controllers.UserApp.isLoggedInSession(request)
+@if(controllers.UserApp.isLoggedInSession(request)==true){
 	@helper.form(action = routes.BoardApp.newPostForm) {
 		<button type="submit" class="btn btn-default" aria-label="Left Align">
 		  등록

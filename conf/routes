@@ -39,6 +39,10 @@ GET            /post/:number/editform                                  controlle
 POST           /post/:number/edit                                      controllers.BoardApp.editPost(number:Long)
 DELETE         /post/:number/comment/:commentId/delete                 controllers.BoardApp.deleteComment(number:Long, commentId:Long)
 
+# File
+POST          /upload                                                  controllers.FileApp.upload
+GET           /uploadForm                                              controllers.FileApp.uploadForm
+
 
 
 # Map static resources from the /public folder to the /assets URL path

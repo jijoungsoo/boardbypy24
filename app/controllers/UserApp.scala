@@ -1,40 +1,19 @@
 package controllers;
 
-import models._
-import models.enumeration.UserState
-import org.apache.commons.lang3.ArrayUtils
-import org.apache.commons.lang3.StringUtils
-import com.fasterxml.jackson.databind.node.ObjectNode
-import play.Configuration
-import play.Logger
-import play.Play
-import play.i18n.Messages
-
-import dao.CatDAO
-import dao.DogDAO
 import javax.inject.Inject
-import play.api.data.Form
-import play.api.data.Forms.mapping
-import play.api.data.Forms.text
-import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.mvc.Action
-import play.api.mvc.Controller
-import play.api.i18n.Lang
-import play.api.i18n.{ MessagesApi, I18nSupport }
-import play.api.mvc._
-import play.mvc.Http
-import play.api.libs.iteratee.Enumerator
 
 import models.User
-import play.api.data.Forms._
+import play.Logger
+import play.api.data.Form
+import play.api.data.Forms.{mapping, _}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import scala.concurrent.Future
-import scala.util.Try
-import scala.util.Failure
-import scala.util.Success
-import scala.concurrent.duration.Duration
-import scala.concurrent.Await
 import play.api.libs.json.Json
+import play.api.mvc.{Action, Controller, _}
+
+import scala.concurrent.Await
+import scala.concurrent.duration.Duration
+import scala.util.{Failure, Success}
 
 
 case class UserData(loginId: String, name: String, email: String, password: String, retypedPassword: String)
@@ -65,20 +44,23 @@ object UserApp {
   val TOKEN_USER: String = "TOKEN_USER";
 
   def getUserFromSession(implicit request: Request[AnyContent]): User = {
+    Logger.info("getUserFromSession :"+SESSION_UID)
 
     request.session.get(SESSION_UID) match {
       case Some(uid) =>
         println(uid)
         val jsonNode = Json.parse(uid);
-     //   val t: User = Json.fromJson(jsonNode, classOf[User]);
-           val t: User =null;
+
+        val t:play.api.libs.json.JsResult[models.User] = Json.fromJson[models.User](jsonNode)
+
+       // val result: Seq[models.User] = Await.result(users, Duration.Inf)
+        val t1:models.User=t.map(x=>x).get;
         if (uid == null) {
+        }
+        if (t1 == null) {
           return invalidSession;
         }
-        if (t == null) {
-          return invalidSession;
-        }
-        return t;
+        return t1;
       case None => println("That didn't work.")
       return invalidSession;
     }
@@ -101,10 +83,15 @@ object UserApp {
   }
   def isLoggedInSession(implicit request: Request[AnyContent]): Boolean =
     {
+      Logger.debug("isLoggedInSession")
       val user = getUserFromSession
+
       if (user.id > 0) {
+        Logger.info("isLoggedInSession:" + user.id)
+        Logger.info("isLoggedInSession: true")
         return true;
       } else {
+        Logger.info("isLoggedInSession: false")
         return false;
       }
     }
@@ -161,7 +148,7 @@ val answe = Json.toJson[models.User](result1(0))
                Logger.debug("Json.prettyPrint(answe) : "+Json.prettyPrint(answe))
             
           //  Ok("OK").withSession(UserApp.SESSION_UID -> Json.prettyPrint(answe))
-      Ok("OK").withSession("loginId" -> loginData.loginId).withCookies(Cookie("theme", "blue"))
+      Ok("OK").withSession(UserApp.SESSION_UID -> Json.prettyPrint(answe)).withCookies(Cookie("theme", "blue"))
           } else {
             BadRequest(views.html.user.login(loginFormParam))
           }
