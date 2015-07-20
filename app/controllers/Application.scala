@@ -1,19 +1,14 @@
 package controllers
 
-import dao.CatDAO
-import dao.DogDAO
-import javax.inject.Inject
-import models.Cat
+import javax.inject.{Inject, Provider}
+
+import dao.{CatDAO, DogDAO}
+import models.{Cat, Dog}
 import play.api.data.Form
-import play.api.data.Forms.mapping
-import play.api.data.Forms.text
+import play.api.data.Forms.{mapping, text}
+import play.api.i18n.{I18nSupport, MessagesApi}
 import play.api.libs.concurrent.Execution.Implicits.defaultContext
-import play.api.mvc.Action
-import play.api.mvc.Controller
-import models.Dog
-import play.api.i18n.Lang
-import play.api.i18n.{ MessagesApi, I18nSupport }
-import javax.inject.Provider
+import play.api.mvc.{Action, Controller}
 import play.api.routing.Router
 
 class Application @Inject() (catDao: CatDAO, dogDao: DogDAO)(val messagesApi: MessagesApi)(router: Provider[Router]) extends Controller with I18nSupport {
